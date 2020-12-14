@@ -5,7 +5,11 @@ class CountdownTimer {
         this.setupObj = setupObj;
         this.intervalId = null;
         this.isActive = false;
+        this.initView();
     };
+    initView() {
+        this.renderTimer(0);
+    }
     getRefs() {
         const timer = document.querySelector(this.setupObj.selector);
         return {
@@ -17,7 +21,7 @@ class CountdownTimer {
     }
     renderTimer(time) {
         const timer = this.getRefs();
-        timer.days.textContent = Math.floor(time / (1000 * 60 * 60 * 24));
+        timer.days.textContent = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
         timer.hours.textContent = this.pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
         timer.mins.textContent = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
         timer.secs.textContent = this.pad(Math.floor((time % (1000 * 60)) / 1000));
@@ -78,7 +82,7 @@ const timer2 = new CountdownTimer({
     targetDate: new Date(date2),
 });
 const timerRef2 = refs.timerId2;
-console.log(refs.timerId.id);
+console.log(refs.timerId2.id);
 
 const btnStart2 = timerRef2.querySelector('[data-action="start"]');
 const btnStop2 = timerRef2.querySelector('[data-action="stop"]');
