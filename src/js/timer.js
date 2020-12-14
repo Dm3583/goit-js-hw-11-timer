@@ -6,6 +6,8 @@ class CountdownTimer {
         this.intervalId = null;
         this.isActive = false;
         this.initView();
+        this.getRefs().btnStart.addEventListener('click', this.start.bind(this));
+        this.getRefs().btnStop.addEventListener('click', this.stop.bind(this));
     };
     initView() {
         this.renderTimer(0);
@@ -17,6 +19,8 @@ class CountdownTimer {
             hours: timer.querySelector('[data-value="hours"]'),
             mins: timer.querySelector('[data-value="mins"]'),
             secs: timer.querySelector('[data-value="secs"]'),
+            btnStart: timer.querySelector('[data-action="start"]'),
+            btnStop: timer.querySelector('[data-action="stop"]')
         };
     }
     renderTimer(time) {
@@ -59,32 +63,17 @@ class CountdownTimer {
 let date = 'Dec 31, 2020 23:59:59';
 
 const timer = new CountdownTimer({
-    selector: `#${refs.timerId.id}`,
+    selector: refs.timerId,
     targetDate: new Date(date),
 });
 
-const timerRef = refs.timerId;
-// console.log(timerRef);
 
-console.log(refs.timerId.id);
-
-const btnStart = timerRef.querySelector('[data-action="start"]');
-const btnStop = timerRef.querySelector('[data-action="stop"]');
-btnStart.addEventListener('click', timer.start.bind(timer));
-btnStop.addEventListener('click', timer.stop.bind(timer));
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 let date2 = 'Dec 29, 2018 10:00';
 
 const timer2 = new CountdownTimer({
-    selector: `#${refs.timerId2.id}`,
+    selector: refs.timerId2,
     targetDate: new Date(date2),
 });
-const timerRef2 = refs.timerId2;
-console.log(refs.timerId2.id);
-
-const btnStart2 = timerRef2.querySelector('[data-action="start"]');
-const btnStop2 = timerRef2.querySelector('[data-action="stop"]');
-btnStart2.addEventListener('click', timer2.start.bind(timer2));
-btnStop2.addEventListener('click', timer2.stop.bind(timer2));
