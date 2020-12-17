@@ -28,23 +28,26 @@ export class CountdownTimer {
         timer.mins.textContent = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
         timer.secs.textContent = this.pad(Math.floor((time % (1000 * 60)) / 1000));
     };
+    timerTick(targDate) {
+        let currentDate = Date.now();
+        let deltaTime = 0;
+        if (targDate > currentDate) {
+            deltaTime = targDate - currentDate;
+        } else {
+            deltaTime = currentDate - targDate;
+        }
+        this.renderTimer.bind(this, deltaTime)();
+    };
     start() {
         if (this.isActive) {
             return;
         }
         this.isActive = true;
         let targetDate = new Date(this.setupObj.targetDate).getTime();
-        this.intervalId = setInterval(() => {
-            let currentDate = Date.now();
-            let deltaTime = 0;
-            if (targetDate > currentDate) {
-                deltaTime = targetDate - currentDate;
-            } else {
-                deltaTime = currentDate - targetDate;
-            }
-            this.renderTimer.bind(this, deltaTime)();
-        }, 1000);
+        this.timerTick(targetDate);
+        this.intervalId = setInterval(this.timerTick.bind(this), 1000, targetDate);
     };
+
     stop() {
         console.log('stop');
         clearInterval(this.intervalId);
